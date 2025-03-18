@@ -178,7 +178,10 @@ namespace HospitalWebApplication.Controllers
             return RedirectToAction("DoctorIndex", "Patient");
         }
 
-
+        public IActionResult TestPage()
+        {
+            return View();
+        }
 
     }
 }
