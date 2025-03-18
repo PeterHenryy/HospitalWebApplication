@@ -1,5 +1,6 @@
 using HospitalWebApplication.Data;
 using HospitalWebApplication.Models.Identity;
+using HospitalWebApplication.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,7 +28,9 @@ namespace HospitalWebApplication
                 options.Password.RequiredUniqueChars = 1;
             })
                                                     .AddEntityFrameworkStores<ApplicationDbContext>();
+            builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
             builder.Services.AddControllersWithViews();
+            builder.Services.AddTransient<UserService>();
             builder.Services.Configure<IdentityOptions>(options =>
             {
                 options.User.AllowedUserNameCharacters = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+!*";

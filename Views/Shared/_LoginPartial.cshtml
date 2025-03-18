@@ -1,6 +1,12 @@
-﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+﻿@using HospitalWebApplication.Models.Identity;
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+@{
+
+    string userID = UserManager.GetUserId(@User);
+    AppUser currentUser = UserManager.FindByIdAsync(userID).Result;
+}
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
