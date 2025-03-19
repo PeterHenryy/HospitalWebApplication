@@ -1,34 +1,138 @@
-﻿@using HospitalWebApplication.Models.Identity;
+﻿@using HospitalWebApplication.Helpers.Enums;
+@using HospitalWebApplication.Models.Identity;
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<AppUser> SignInManager
 @inject UserManager<AppUser> UserManager
 @{
-
+    bool doctorRole = User.IsInRole(UserRolesEnum.Doctor.ToString());
+    bool adminRole = User.IsInRole(UserRolesEnum.Admin.ToString());
+    string action = doctorRole ? "Doctor" : "Patient";
+    string greeting = doctorRole ? "Doctor" : "";
     string userID = UserManager.GetUserId(@User);
     AppUser currentUser = UserManager.FindByIdAsync(userID).Result;
 }
 
-<ul class="navbar-nav">
-@if (SignInManager.IsSignedIn(User))
-{
-    <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
-    </li>
-    <li class="nav-item">
-        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-        </form>
-    </li>
-}
-else
-{
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="@Url.Action("TestPage", "AppUser")" style="color:black;">Login</a>
-    </li>
+<!-- Meta Tags -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="keywords" content="Site keywords here">
+<meta name="description" content="">
+<meta name='copyright' content=''>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="~/css/site.css" rel="stylesheet" />
+<!-- Title -->
+<title>Mediplus - Free Medical and Doctor Directory HTML Template.</title>
+
+<!-- Favicon -->
+<link rel="icon" href="~/ProjectTheme2/img/favicon.png">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+<link href="~/css/promis-form.css" rel="stylesheet" />
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="~/ProjectTheme2/css/bootstrap.min.css">
+<link href="~/css/general.css" rel="stylesheet" />
+<!-- Nice Select CSS -->
+<link rel="stylesheet" href="~/ProjectTheme2/css/nice-select.css">
+<!-- Font Awesome CSS -->
+<link href="~/css/login-partial.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/ProjectTheme2/css/font-awesome.min.css">
+<!-- icofont CSS -->
+<link rel="stylesheet" href="~/ProjectTheme2/css/icofont.css">
+<!-- Slicknav -->
+<link rel="stylesheet" href="~/ProjectTheme2/css/slicknav.min.css">
+<!-- Owl Carousel CSS -->
+<link rel="stylesheet" href="~/ProjectTheme2/css/owl-carousel.css">
+<!-- Datepicker CSS -->
+<link rel="stylesheet" href="~/ProjectTheme2/css/datepicker.css">
+<!-- Animate CSS -->
+<link rel="stylesheet" href="~/ProjectTheme2/css/animate.min.css">
+<!-- Magnific Popup CSS -->
+<link rel="stylesheet" href="~/ProjectTheme2/css/magnific-popup.css">
+<style>
+    .navbar-nav .nav-link:hover {
+        color: rgb(92, 155, 217) !important;
+    }
+</style>
+<!-- Medipro CSS -->
+<link rel="stylesheet" href="~/ProjectTheme2/css/normalize.css">
+<link rel="stylesheet" href="~/ProjectTheme2/style.css">
+<link rel="stylesheet" href="~/ProjectTheme2/css/responsive.css">
+
+<header class="header" style="margin-bottom: 10px; margin-top: 20px;">
+    <div class="header-inner">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light" style="display: flex; align-items: center;">
+                <a class="navbar-brand">
+                    <img style="height: 60px;" src="~/ProjectTheme/img/cliniclogo.png" alt="#">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav" style="justify-content: center;">
+                    <ul class="navbar-nav ms-auto" style="gap: 15px; color: black; font-size: 16px;">
+                        @if (doctorRole)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("MyAppointments", "Doctor")">My Appointments</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("EditDoctorProfile", "Doctor")">Edit Profile</a>
+                            </li>
+                        }
+                        else if (adminRole)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("DoctorsIndex", "Admin")">Doctors</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("PatientsIndex", "Admin")">Patients</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("RegisterDoctor", "Admin")">Register Doctor</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("DoctorIndex", "Patient")">Doctors</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("MyAppointments", "Patient")">Appointments & Bills</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("PatientBills", "Patient")">Paid Bills</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Update", "AppUser")">Edit Profile</a>
+                            </li>
+                        }
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Logout", "AppUser")">Logout</a>
+                        </li>
+                        @{
+                            string userName = doctorRole ? "Dr. " + @currentUser.FirstName : @currentUser.FirstName;
+                            string controllerName = userName == @currentUser.FirstName ? "AppUser" : "Doctor";
+                            string actionName = userName == @currentUser.FirstName ? "Update" : "EditDoctorProfile";
+                        }
 
 
-}
-</ul>
+                        <li class="nav-item d-flex align-items-center">
+                            <a class="nav-link d-flex align-items-center" href="@Url.Action(actionName, controllerName)">
+
+                                <img class="rounded-circle me-2" width="40px" style="margin-right: 7px; height: 40px; width: 40px;" src="~/profilepics/@currentUser.ProfilePicture">
+                                <span>@userName</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<!-- Include Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/8da1ba04bb.js" crossorigin="anonymous"></script>
+

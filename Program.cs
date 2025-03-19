@@ -1,5 +1,7 @@
 using HospitalWebApplication.Data;
 using HospitalWebApplication.Models.Identity;
+using HospitalWebApplication.Models.Interfaces;
+using HospitalWebApplication.Models.Repositories;
 using HospitalWebApplication.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +33,12 @@ namespace HospitalWebApplication
             builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
             builder.Services.AddControllersWithViews();
             builder.Services.AddTransient<UserService>();
+            builder.Services.AddTransient<IDoctorRepository, DoctorRepository>();
+            builder.Services.AddTransient<DoctorService>();
+            builder.Services.AddTransient<IPatientRepository, PatientRepository>();
+            builder.Services.AddTransient<PatientService>();
+            builder.Services.AddTransient<AdminService>();
+            builder.Services.AddTransient<IAdminRepository, AdminRepository>();
             builder.Services.Configure<IdentityOptions>(options =>
             {
                 options.User.AllowedUserNameCharacters = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+!*";
