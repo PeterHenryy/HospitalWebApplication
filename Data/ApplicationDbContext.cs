@@ -1,6 +1,10 @@
-﻿using HospitalWebApplication.Models.Identity;
+﻿using HospitalWebApplication.Models;
+using HospitalWebApplication.Models.Doctors;
+using HospitalWebApplication.Models.Identity;
+using HospitalWebApplication.Models.Patients;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Numerics;
 
 namespace HospitalWebApplication.Data
 {
@@ -10,6 +14,12 @@ namespace HospitalWebApplication.Data
             : base(options)
         {
         }
+        public DbSet<PROMIS10> PROMIS10s { get; set; }
+        public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<Bill> Bills { get; set; }
+        public DbSet<BillItem> BillItems { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
