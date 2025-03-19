@@ -1,0 +1,107 @@
+﻿body {
+    background-image: url(https://images4.alphacoders.com/129/1297452.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover; /* Ensures the image covers the entire screen */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Ensures body takes full viewport height */
+    margin: 0; /* Removes default margin */
+}
+
+
+@media (max-width: 768px) {
+    body {
+        background-size: cover; /* For tablet or smaller devices */
+        background-position: top center; /* Adjusts image to focus on top part */
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        background-size: cover; /* Maintains the image cover for mobile screens */
+        background-position: center; /* Keeps the image centered */
+    }
+}
+
+.login-form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 25px;
+    min-height: 400px;
+    width: 400px;
+    background: linear-gradient(135deg, #8d78c0, #4e3785);
+    border-radius: 9px;
+    color: lightgray;
+}
+
+input {
+    font-family: Arial;
+    font-size: 18px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    display: block;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    border-bottom-color: rgb(136, 107, 160);
+    background: none;
+    padding: 5px;
+    color: lightgray;
+}
+
+    input:focus {
+        outline: none;
+    }
+
+    input::placeholder {
+        color: lightgray;
+    }
+
+h1 {
+    font-family: Arial;
+    animation-name: appear;
+    animation-duration: 4s;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0
+    }
+}
+
+button, .register-button {
+    position: relative;
+    margin-bottom: 10px;
+    top: 15px;
+    border: none;
+    font-size: 18px;
+    border-radius: 5px;
+    border: 1px solid lightblue;
+    background: none;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: lightgray;
+    width: 100%;
+    transition: background-color 0.5s, box-shadow 0.5s;
+}
+
+    button:hover, .register-button:hover {
+        cursor: pointer;
+        background-color: rgb(66, 155, 210);
+        border: none;
+        box-shadow: 0px 0px 5px lightblue;
+    }
+
+.error-message {
+    color: white;
+    font-size: 20px;
+    margin-top: 50px;
+    margin-bottom: 35px;
+    font-family: Arial;
+}
