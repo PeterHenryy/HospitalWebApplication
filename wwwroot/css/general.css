@@ -1,0 +1,18 @@
+﻿* {
+    margin: -7px;
+    padding: 0;
+}
+
+.table-announcer {
+    margin-bottom: 25px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.questions-explanation {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 25px;
+}
