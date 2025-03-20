@@ -1,0 +1,89 @@
+﻿@model List<Doctor>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Aesthetic Template">
+    <meta name="keywords" content="Aesthetic, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aesthetic | Template</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link href="~/css/patient-doctor-index.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/ProjectTheme/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="~/ProjectTheme/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="~/ProjectTheme/css/flaticon.css" type="text/css">
+    <link rel="stylesheet" href="~/ProjectTheme/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="~/ProjectTheme/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="~/ProjectTheme/css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="~/ProjectTheme/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="~/ProjectTheme/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/ProjectTheme/css/style.css" type="text/css">
+</head>
+<body>
+    <header class="header">
+        <partial name="_LoginPartial" />
+    </header>
+    <!-- Header Section End -->
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-option spad set-bg" data-setbg="/ProjectTheme/img/breadcrumb-bg.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+    <!-- Blog Section Begin -->
+    <section class="blog spad">
+        <div class="container">
+            <div class="row">
+                @foreach (var doctor in Model)
+                {
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <a href="@Url.Action("DoctorAndAppointmentsDetails", "Patient", new {doctorID = @doctor.ID})">
+                            <div class="blog__item">
+                                <div class="blog__item__pic">
+                                    <img style="width: 350px; height: 350px;" src="~/profilepics/@doctor.User.ProfilePicture">
+                                </div>
+                                <div class="blog__item__text">
+                                    <ul>
+                                        <li class="doctor-name" style="font-weight: bold"> @(doctor.User.FirstName == null ? doctor.User.UserName : doctor.User.FirstName + "  " + doctor.User.LastName)</li>
+                                    </ul>
+                                    <p class="doctor-role">@doctor.DoctorRole</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+    <!-- Blog Section End -->
+    <!-- Footer Section Begin -->
+    <partial name="_FooterPartial" />
+    <!-- Js Plugins -->
+    <script src="~/ProjectTheme/js/jquery-3.3.1.min.js"></script>
+    <script src="~/ProjectTheme/js/bootstrap.min.js"></script>
+    <script src="~/ProjectTheme/js/jquery.magnific-popup.min.js"></script>
+    <script src="~/ProjectTheme/js/masonry.pkgd.min.js"></script>
+    <script src="~/ProjectTheme/js/jquery-ui.min.js"></script>
+    <script src="~/ProjectTheme/js/jquery.nice-select.min.js"></script>
+    <script src="~/ProjectTheme/js/jquery.slicknav.js"></script>
+    <script src="~/ProjectTheme/js/owl.carousel.min.js"></script>
+    <script src="~/ProjectTheme/js/main.js"></script>
+</body>
+
+</html>

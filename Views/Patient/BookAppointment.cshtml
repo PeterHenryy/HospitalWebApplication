@@ -1,6 +1,7 @@
-﻿@model RegisterDoctorAndUserViewModelForm
+﻿@model CreateAppointmentViewModel
 
-@using System.Text.RegularExpressions;
+@using HospitalWebApplication.Models.Patients
+
 @{
 	Layout = null;
 }
@@ -15,17 +16,16 @@
 	<meta name='copyright' content=''>
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link href="~/css/site.css" rel="stylesheet" />
-	<link href="~/css/billing-for-appointment.css" rel="stylesheet" />
-	<link href="~/css/admin-doctors-index.css" rel="stylesheet" />
 	<!-- Title -->
-	<title>Online Hospital</title>
-	<link href="~/css/general.css" rel="stylesheet" />
+	<title>Mediplus - Free Medical and Doctor Directory HTML Template.</title>
+
 	<!-- Favicon -->
 	<link rel="icon" href="~/ProjectTheme2/img/favicon.png">
-	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 	<!-- Google Fonts -->
 	<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
 	<link href="~/css/promis-form.css" rel="stylesheet" />
+	<link href="~/css/general.css" rel="stylesheet" />
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="~/ProjectTheme2/css/bootstrap.min.css">
 	<!-- Nice Select CSS -->
@@ -150,11 +150,6 @@
 			background: #d9486d;
 		}
 
-		.list {
-			display: grid;
-			grid-template-columns: repeat(1, 1fr);
-		}
-
 		.option-input.radio:disabled,
 		.option-input.radio:disabled + .app-border {
 			cursor: not-allowed;
@@ -166,13 +161,15 @@
 			top: 5px;
 			margin-right: 10px;
 		}
+
 	</style>
 </head>
 <body>
 
+
+	<!-- Header Area -->
 	<header class="header">
 		<partial name="_LoginPartial" />
-
 	</header>
 	<!-- End Header Area -->
 	<!-- Breadcrumbs -->
@@ -183,65 +180,55 @@
 	<section class="news-single section">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-12 col-12">
+				<div class="col-lg-8 col-12">
 					<div class="row">
 						<div class="col-12">
 							<div class="single-main">
+								<!-- News Head -->
 								<div class="news-head">
+									@*<img src="~/profilepics/@Model.Appointment.Doctor.User.ProfilePicture" alt="#">*@
+								</div>
 
-									<div class="login-form-container container">
-										<h2 style="text-align: center;margin-bottom: 25px;">Add a New Doctor</h2>
-										<form asp-controller="Admin" asp-action="RegisterDoctor" class="authentication-form">
-											<div class="row">
-												<div class="col-md-6">
-													<label for="inputEmail4" class="form-label">UserName</label>
-													<input asp-for="UserDataForm.UserName" class="form-control" id="inputEmail4" required>
-												</div>
-												<div class="col-md-6">
-													<label for="inputEmail4" class="form-label">Email</label>
-													<input type="email" asp-for="UserDataForm.Email" class="form-control" id="inputEmail4" required>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-md-6">
-													<label for="inputEmail4" class="form-label">First Name</label>
-													<input asp-for="UserDataForm.FirstName" class="form-control" id="inputEmail4" required>
-												</div>
-												<div class="col-md-6">
-													<label for="inputEmail4" class="form-label">Last Name</label>
-													<input asp-for="UserDataForm.LastName" class="form-control" id="inputEmail4" required>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-md-12">
-													<label for="inputEmail4" class="form-label">Password</label>
-													<input type="password" asp-for="UserDataForm.Password" class="form-control" id="inputEmail4" required>
-												</div>
-											</div>
-											<div class="row">
-												<div style="margin-top:14px; margin-left: 14px">
+								<div class="meta promis-form-container">
+									<div class="meta-left promis-questions-container">
 
-													@{
-														List<string> rolesFormatted = new List<string>();
-														foreach (var role in Model.DoctorRoles)
+										<p class="question-announcement">The following questions are meant to be answered considering the past 7 days</p>
+										<div class="questions-explanation">
+											<p style="color: black; font-size: 18px;">(1 = Very Often, 5 = Not at All)</p>
+										</div>
+										<form asp-controller="Patient" asp-action="BookAppointment">
+											<input type="text" class="form-control" hidden asp-for="@Model.Appointment.ID" value="@Model.Appointment.ID">
+											<input type="text" class="form-control" hidden asp-for="@Model.Appointment.AppointmentStartTime" value="@Model.Appointment.AppointmentStartTime">
+											<input type="text" class="form-control" hidden asp-for="@Model.Appointment.AppointmentEndTime" value="@Model.Appointment.AppointmentEndTime">
+											<input type="text" class="form-control" hidden asp-for="@Model.Appointment.AppointmentDate" value="@Model.Appointment.AppointmentDate">
+											<input type="text" class="form-control" hidden asp-for="@Model.Appointment.InitialTotal" value="@Model.Appointment.InitialTotal">
+											<input type="text" class="form-control" hidden asp-for="@Model.Appointment.IsBooked" value="True">
+											<input type="text" class="form-control" hidden asp-for="@Model.Appointment.DoctorID" value="@Model.Appointment.DoctorID">
+											<input type="text" class="form-control" hidden asp-for="@Model.Appointment.UserID" value="@Model.Appointment.UserID">
+
+											@for (var i = 0; i < PROMIS10_Questions.QuestionsList.Count; i++)
+											{
+												<div class="question-and-answers">
+													<label class="promis-question">@(i + 1). @PROMIS10_Questions.QuestionsList[i]</label>
+													<div class="answers">
+														@for (var j = 1; j <= 5; j++)
 														{
-															string formattedRole = Regex.Replace(role, "[-_]", " ");
-
-															rolesFormatted.Add(formattedRole);
+															<label>
+																<input class="answer-radio form-check-input" type="radio" name="Answers[@i]" value="@j" required /> @j
+															</label>
 														}
-													}
-													<p style="font-weight: bold; margin-bottom: 15px;">Select a Doctor Role</p>
-													<select asp-for="DoctorDataForm.DoctorRole" asp-items="new SelectList(rolesFormatted)" required>
-													</select>
+													</div>
+													<input type="hidden" name="QuestionIds[@i]" value="@i" style="float:right" />
 												</div>
+											}
 
-
+											<div>
+												<label class="additional-info">You can provide additional info here if you wish</label>
+												<textarea type="" placeholder="Add notes..." class="notes-input" asp-for="@Model.Appointment.Notes"></textarea>
 											</div>
-
-
-											<button class="btn btn-primary" type="submit" style="background-color: rgb(92, 155, 217); width:100%;">Add Doctor</button>
-
-
+											<div class="promis-form-button-container">
+												<button class="promis-form-submit-button" type="submit">Submit</button>
+											</div>
 										</form>
 									</div>
 								</div>
@@ -249,12 +236,35 @@
 						</div>
 					</div>
 				</div>
+				<div class="col-lg-4 col-12">
+					<div class="main-sidebar">
+						<!-- Single Widget -->
+						<div class="single-widget category">
+							<h3 class="title">Doctor Bio</h3>
+							<p>
+								@(Model.Appointment.Doctor.Bio != null ? Model.Appointment.Doctor.Bio : "Specialist at Ineza Physiotherapy Clinic")
+							</p>
+						</div>
+						<!--/ End Single Widget -->
+						<!-- Single Widget -->
+						<div class="single-widget category">
+							<h3 class="title">Appointment Details</h3>
+							<ul class="categor-list" style="display: flex; flex-direction: column; align-items: start;">
+								<li><a> <span style="color:black;font-weight:500">Appointment Date: </span> @Model.Appointment.AppointmentDate.ToString("MM/dd/yyyy")</a></li>
+								<li><a> <span style="color:black;font-weight:500">Start Time: </span> @Model.Appointment.AppointmentStartTime</a></li>
+								<li><a> <span style="color:black;font-weight:500">End Time: </span> @Model.Appointment.AppointmentEndTime</a></li>
+								<li><a> <span style="color:black;font-weight:500">Initial Total: </span> $ @Model.Appointment.InitialTotal</a></li>
+							</ul>
+						</div>
+						<!--/ End Single Widget -->
+					</div>
+				</div>
 			</div>
 		</div>
 	</section>
+	<!--/ End Single News -->
 	<partial name="_FooterPartial" />
 
-	<!--/ End Single News -->
 	<!--/ End Footer Area -->
 	<script src="~/ProjectTheme2/js/jquery.min.js"></script>
 	<script src="~/ProjectTheme2/js/jquery-migrate-3.0.0.js"></script>
@@ -276,21 +286,5 @@
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
 	<script src="~/ProjectTheme2/js/bootstrap.min.js"></script>
 	<script src="~/ProjectTheme2/js/main.js"></script>
-	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-	<!-- Your other head elements -->
-
-	<script>
-		$(document).ready(() => {
-			$("#bill-item-form").hide();
-
-			$("#add-bill-item-button").click(() => {
-				$("#bill-item-form").toggle("slow");
-			});
-
-			$("#create-item-button").click(() => {
-				$("#bill-item-form").hide("slow");
-			});
-		});
-	</script>
 </body>
 </html>

@@ -1,6 +1,4 @@
-﻿@model RegisterDoctorAndUserViewModelForm
-
-@using System.Text.RegularExpressions;
+﻿@model List<Bill>
 @{
 	Layout = null;
 }
@@ -15,14 +13,12 @@
 	<meta name='copyright' content=''>
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link href="~/css/site.css" rel="stylesheet" />
-	<link href="~/css/billing-for-appointment.css" rel="stylesheet" />
-	<link href="~/css/admin-doctors-index.css" rel="stylesheet" />
 	<!-- Title -->
-	<title>Online Hospital</title>
-	<link href="~/css/general.css" rel="stylesheet" />
+	<title>Mediplus - Free Medical and Doctor Directory HTML Template.</title>
+
 	<!-- Favicon -->
 	<link rel="icon" href="~/ProjectTheme2/img/favicon.png">
-	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 	<!-- Google Fonts -->
 	<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
 	<link href="~/css/promis-form.css" rel="stylesheet" />
@@ -150,11 +146,6 @@
 			background: #d9486d;
 		}
 
-		.list {
-			display: grid;
-			grid-template-columns: repeat(1, 1fr);
-		}
-
 		.option-input.radio:disabled,
 		.option-input.radio:disabled + .app-border {
 			cursor: not-allowed;
@@ -166,6 +157,7 @@
 			top: 5px;
 			margin-right: 10px;
 		}
+
 	</style>
 </head>
 <body>
@@ -180,81 +172,64 @@
 	</div>
 	<!-- End Breadcrumbs -->
 	<!-- Single News -->
-	<section class="news-single section">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12 col-12">
-					<div class="row">
-						<div class="col-12">
-							<div class="single-main">
-								<div class="news-head">
+	<div class="content-wrapper">
 
-									<div class="login-form-container container">
-										<h2 style="text-align: center;margin-bottom: 25px;">Add a New Doctor</h2>
-										<form asp-controller="Admin" asp-action="RegisterDoctor" class="authentication-form">
-											<div class="row">
-												<div class="col-md-6">
-													<label for="inputEmail4" class="form-label">UserName</label>
-													<input asp-for="UserDataForm.UserName" class="form-control" id="inputEmail4" required>
-												</div>
-												<div class="col-md-6">
-													<label for="inputEmail4" class="form-label">Email</label>
-													<input type="email" asp-for="UserDataForm.Email" class="form-control" id="inputEmail4" required>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-md-6">
-													<label for="inputEmail4" class="form-label">First Name</label>
-													<input asp-for="UserDataForm.FirstName" class="form-control" id="inputEmail4" required>
-												</div>
-												<div class="col-md-6">
-													<label for="inputEmail4" class="form-label">Last Name</label>
-													<input asp-for="UserDataForm.LastName" class="form-control" id="inputEmail4" required>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-md-12">
-													<label for="inputEmail4" class="form-label">Password</label>
-													<input type="password" asp-for="UserDataForm.Password" class="form-control" id="inputEmail4" required>
-												</div>
-											</div>
-											<div class="row">
-												<div style="margin-top:14px; margin-left: 14px">
+		<section class="news-single section">
+			<div class="container-sm">
+				<div class="row justify-content-center">
+					<div class="col-8" style="box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.10); display: flex; flex-direction:column; align-items:center; padding: 15px;">
+						@if (Model.Count == 0)
+						{
+							<h3 style="text-align: center; font-weight:600">No Bills Paid yet </h3>
+						}
+						else
+						{
+							<div class="table-responsive">
+								<h3 style="text-align: center; font-weight:600">Your Bills</h3>
 
-													@{
-														List<string> rolesFormatted = new List<string>();
-														foreach (var role in Model.DoctorRoles)
-														{
-															string formattedRole = Regex.Replace(role, "[-_]", " ");
+								<table id="patient-bills" class="table table-striped ">
+									<thead>
 
-															rolesFormatted.Add(formattedRole);
-														}
-													}
-													<p style="font-weight: bold; margin-bottom: 15px;">Select a Doctor Role</p>
-													<select asp-for="DoctorDataForm.DoctorRole" asp-items="new SelectList(rolesFormatted)" required>
-													</select>
-												</div>
+										<tr>
+											<th>Doctor</th>
+											<th>Paid Total</th>
+											<th>Appointment Cost</th>
+											<th>Insurance</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+									<tbody>
 
+										@foreach (var bill in Model)
+										{
 
-											</div>
+											string insuranceName = @InsuranceTypesEnum.GetInsuranceNameById(bill.InsuranceId);
+											bool insuranceExists = !String.IsNullOrEmpty(insuranceName);
+											string insurance = insuranceExists ? insuranceName : "N/A";
 
+											<tr>
+												<td>@bill.Appointment.Doctor.User.FirstName @bill.Appointment.Doctor.User.LastName</td>
+												<td>$@bill.Total </td>
+												<td>$@bill.OriginalTotal </td>
+												<td>@insurance </td>
+												<td> <a class="btn btn-primary" style="background-color: rgb(92, 155, 217);" href="@Url.Action("AppointmentDetails", "Patient", new {appointmentID = bill.AppointmentId})">Details</a></td>
+											</tr>
+										}
+									</tbody>
 
-											<button class="btn btn-primary" type="submit" style="background-color: rgb(92, 155, 217); width:100%;">Add Doctor</button>
-
-
-										</form>
-									</div>
-								</div>
+								</table>
 							</div>
-						</div>
+
+						}
 					</div>
 				</div>
 			</div>
-		</div>
-	</section>
+		</section>
+	</div>
+	<!--/ End Single News -->
+	<!-- Footer Area -->
 	<partial name="_FooterPartial" />
 
-	<!--/ End Single News -->
 	<!--/ End Footer Area -->
 	<script src="~/ProjectTheme2/js/jquery.min.js"></script>
 	<script src="~/ProjectTheme2/js/jquery-migrate-3.0.0.js"></script>
@@ -277,20 +252,16 @@
 	<script src="~/ProjectTheme2/js/bootstrap.min.js"></script>
 	<script src="~/ProjectTheme2/js/main.js"></script>
 	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-	<!-- Your other head elements -->
-
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
 	<script>
-		$(document).ready(() => {
-			$("#bill-item-form").hide();
-
-			$("#add-bill-item-button").click(() => {
-				$("#bill-item-form").toggle("slow");
-			});
-
-			$("#create-item-button").click(() => {
-				$("#bill-item-form").hide("slow");
-			});
+		$.noConflict();
+		jQuery(document).ready(function ($) {
+			$('#patient-bills').DataTable();
 		});
 	</script>
 </body>
 </html>
+
+

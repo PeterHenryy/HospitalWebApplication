@@ -1,4 +1,4 @@
-﻿@model RegisterDoctorAndUserViewModelForm
+﻿@model HospitalWebApplication.Models.Doctors.ViewModels.DoctorUpdateViewModelForm
 
 @using System.Text.RegularExpressions;
 @{
@@ -18,7 +18,7 @@
 	<link href="~/css/billing-for-appointment.css" rel="stylesheet" />
 	<link href="~/css/admin-doctors-index.css" rel="stylesheet" />
 	<!-- Title -->
-	<title>Online Hospital</title>
+	<title>Mediplus - Free Medical and Doctor Directory HTML Template.</title>
 	<link href="~/css/general.css" rel="stylesheet" />
 	<!-- Favicon -->
 	<link rel="icon" href="~/ProjectTheme2/img/favicon.png">
@@ -150,11 +150,6 @@
 			background: #d9486d;
 		}
 
-		.list {
-			display: grid;
-			grid-template-columns: repeat(1, 1fr);
-		}
-
 		.option-input.radio:disabled,
 		.option-input.radio:disabled + .app-border {
 			cursor: not-allowed;
@@ -170,6 +165,9 @@
 </head>
 <body>
 
+
+
+	<!-- Header Area -->
 	<header class="header">
 		<partial name="_LoginPartial" />
 
@@ -190,58 +188,49 @@
 								<div class="news-head">
 
 									<div class="login-form-container container">
-										<h2 style="text-align: center;margin-bottom: 25px;">Add a New Doctor</h2>
-										<form asp-controller="Admin" asp-action="RegisterDoctor" class="authentication-form">
-											<div class="row">
-												<div class="col-md-6">
-													<label for="inputEmail4" class="form-label">UserName</label>
-													<input asp-for="UserDataForm.UserName" class="form-control" id="inputEmail4" required>
+										<h2 style="text-align: center;margin-bottom: 25px;">Update Profile</h2>
+										<form asp-controller="Doctor" asp-action="EditDoctorProfile" enctype="multipart/form-data">
+
+											<div class="form-row">
+												<div class="form-group col-md-6">
+													<label for="inputEmail4">FirstName</label>
+													<input type="text" class="form-control" placeholder="FirstName" asp-for="@Model.AppUser.FirstName">
 												</div>
-												<div class="col-md-6">
-													<label for="inputEmail4" class="form-label">Email</label>
-													<input type="email" asp-for="UserDataForm.Email" class="form-control" id="inputEmail4" required>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-md-6">
-													<label for="inputEmail4" class="form-label">First Name</label>
-													<input asp-for="UserDataForm.FirstName" class="form-control" id="inputEmail4" required>
-												</div>
-												<div class="col-md-6">
-													<label for="inputEmail4" class="form-label">Last Name</label>
-													<input asp-for="UserDataForm.LastName" class="form-control" id="inputEmail4" required>
+												<div class="form-group col-md-6">
+													<label for="inputPassword4">LastName</label>
+													<input type="text" class="form-control" placeholder="LastName" asp-for="@Model.AppUser.LastName">
 												</div>
 											</div>
-											<div class="row">
-												<div class="col-md-12">
-													<label for="inputEmail4" class="form-label">Password</label>
-													<input type="password" asp-for="UserDataForm.Password" class="form-control" id="inputEmail4" required>
-												</div>
+											<div class="form-group">
+												<label for="inputAddress2">Password</label>
+												<input type="password" class="form-control" placeholder="Password" asp-for="@Model.AppUser.Password">
 											</div>
-											<div class="row">
-												<div style="margin-top:14px; margin-left: 14px">
-
-													@{
-														List<string> rolesFormatted = new List<string>();
-														foreach (var role in Model.DoctorRoles)
-														{
-															string formattedRole = Regex.Replace(role, "[-_]", " ");
-
-															rolesFormatted.Add(formattedRole);
-														}
-													}
-													<p style="font-weight: bold; margin-bottom: 15px;">Select a Doctor Role</p>
-													<select asp-for="DoctorDataForm.DoctorRole" asp-items="new SelectList(rolesFormatted)" required>
-													</select>
-												</div>
-
-
+											<div class="form-group">
+												<label for="inputAddress2">Phone Number</label>
+												<input type="text" class="form-control" placeholder="Phone Number" asp-for="@Model.AppUser.PhoneNumber">
+											</div>
+											<div class="form-group ">
+												<label for="inputAddress2">Profile Picture</label>
+												<img style="height: 50px;width: 50px; border-radius: 50%" src="~/profilepics/@Model.AppUser.ProfilePicture" />
+												<input type="file" class="form-control" placeholder="Profile Picture" asp-for="@Model.AppUser.ProfilePicture">
+											</div>
+											<div class="form-group">
+												<label for="inputAddress2">UserName</label>
+												<input type="text" class="form-control" placeholder="UserName" asp-for="@Model.AppUser.UserName">
+											</div>
+											<div class="form-group">
+												<label for="inputAddress2">Email</label>
+												<input type="text" class="form-control" placeholder="Email" asp-for="@Model.AppUser.Email">
 											</div>
 
+											@*--------------------------------------Doctor Bio ---------------------------------------------------------------*@
+											<input type="text" hidden class="form-control" placeholder="Bio" value="@Model.Doctor.ID" asp-for="@Model.Doctor.ID">
 
-											<button class="btn btn-primary" type="submit" style="background-color: rgb(92, 155, 217); width:100%;">Add Doctor</button>
-
-
+											<div class="form-group">
+												<label for="inputAddress2">Bio</label>
+												<input type="text" class="form-control" placeholder="@Model.Doctor.Bio" asp-for="@Model.Doctor.Bio">
+											</div>
+											<button type="submit" style="width: 100%; background-color: rgb(92, 155, 217);" class="btn btn-primary">Update</button>
 										</form>
 									</div>
 								</div>
@@ -254,7 +243,6 @@
 	</section>
 	<partial name="_FooterPartial" />
 
-	<!--/ End Single News -->
 	<!--/ End Footer Area -->
 	<script src="~/ProjectTheme2/js/jquery.min.js"></script>
 	<script src="~/ProjectTheme2/js/jquery-migrate-3.0.0.js"></script>

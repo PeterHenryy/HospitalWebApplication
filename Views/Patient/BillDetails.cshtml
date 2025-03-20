@@ -1,0 +1,430 @@
+﻿@model HospitalWebApplication.Models.Patients.ViewModels.BillAndTransactionDetailsViewModelForm
+
+@{
+	Layout = null;
+}
+<!doctype html>
+<html class="no-js" lang="zxx">
+<head>
+	<!-- Meta Tags -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="keywords" content="Site keywords here">
+	<meta name="description" content="">
+	<meta name='copyright' content=''>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link href="~/css/site.css" rel="stylesheet" />
+	<link href="~/css/bill-details.css" rel="stylesheet" />
+	<!-- Title -->
+	<title>Mediplus - Free Medical and Doctor Directory HTML Template.</title>
+	<link href="~/css/general.css" rel="stylesheet" />
+	<!-- Favicon -->
+	<link rel="icon" href="~/ProjectTheme2/img/favicon.png">
+
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+	<link href="~/css/promis-form.css" rel="stylesheet" />
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="~/ProjectTheme2/css/bootstrap.min.css">
+	<!-- Nice Select CSS -->
+	<link rel="stylesheet" href="~/ProjectTheme2/css/nice-select.css">
+	<!-- Font Awesome CSS -->
+	<link rel="stylesheet" href="~/ProjectTheme2/css/font-awesome.min.css">
+	<!-- icofont CSS -->
+	<link rel="stylesheet" href="~/ProjectTheme2/css/icofont.css">
+	<!-- Slicknav -->
+	<link rel="stylesheet" href="~/ProjectTheme2/css/slicknav.min.css">
+	<!-- Owl Carousel CSS -->
+	<link rel="stylesheet" href="~/ProjectTheme2/css/owl-carousel.css">
+	<!-- Datepicker CSS -->
+	<link rel="stylesheet" href="~/ProjectTheme2/css/datepicker.css">
+	<!-- Animate CSS -->
+	<link rel="stylesheet" href="~/ProjectTheme2/css/animate.min.css">
+	<!-- Magnific Popup CSS -->
+	<link rel="stylesheet" href="~/ProjectTheme2/css/magnific-popup.css">
+
+	<!-- Medipro CSS -->
+	<link rel="stylesheet" href="~/ProjectTheme2/css/normalize.css">
+	<link rel="stylesheet" href="~/ProjectTheme2/style.css">
+	<link rel="stylesheet" href="~/ProjectTheme2/css/responsive.css">
+	<style>
+		.app-time {
+			border: 1px solid #fff;
+			padding: 20px 30px;
+			box-shadow: 2px 4px 10px 0px #c7cacce3;
+		}
+
+		.option-input {
+			-webkit-appearance: none;
+			-moz-appearance: none;
+			-ms-appearance: none;
+			-o-appearance: none;
+			appearance: none;
+			position: relative;
+			top: 5px;
+			right: 0;
+			bottom: 0;
+			left: 40px;
+			height: 20px;
+			width: 20px;
+			transition: all 0.15s ease-out 0s;
+			background: #fff;
+			border: 1px solid #999;
+			color: #fff;
+			cursor: pointer;
+			display: inline-block;
+			margin-right: 0.5rem;
+			outline: none;
+			position: relative;
+			z-index: 1000;
+		}
+
+			.option-input:hover {
+				background: #e5e7eb;
+			}
+
+			.option-input:checked {
+				border: 1px solid #fff;
+			}
+
+				.option-input:checked::before {
+					color: #d9486d;
+					height: 40px;
+					width: 40px;
+					position: absolute;
+					content: "✔";
+					display: inline-block;
+					font-size: 12px;
+					left: 4px;
+					line-height: 20px;
+				}
+
+				.option-input:checked::after {
+					-webkit-animation: click-wave 0.65s;
+					-moz-animation: click-wave 0.65s;
+					animation: click-wave 0.65s;
+					background: #40e0d0;
+					content: "";
+					display: block;
+					position: relative;
+					z-index: 100;
+				}
+
+			.option-input.radio {
+				border-radius: 50%;
+				calc(40.666% )
+			}
+
+				.option-input.radio::after {
+					border-radius: 50%;
+				}
+
+		.app-check {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 10px; /* Adjust the gap as needed */
+		}
+
+		.app-border {
+			border: 1px solid #ccc;
+			padding: 5px;
+			text-align: center;
+			width: 139px;
+			box-sizing: border-box;
+			margin-bottom: 11px;
+			margin-left: 16px;
+			transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out; /* Adding smooth transitions for both box-shadow and size changes */
+			border-radius: 8px; /* Adjust the value for the desired roundness */
+		}
+
+			.app-border:hover {
+				box-shadow: 0px 0px 5px rgba(26, 118, 209, 0.8); /* Blue color with 0.8 opacity for a shadow effect, with a smaller blur radius */
+				transform: scale(1.03); /* Slightly larger size on hover, adjust the scale factor as needed */
+			}
+
+
+
+		.option-input.radio:checked + .app-border {
+			background: #d9486d;
+		}
+
+		.option-input.radio:disabled,
+		.option-input.radio:disabled + .app-border {
+			cursor: not-allowed;
+			opacity: 0.6;
+		}
+
+		.app-label {
+			position: relative;
+			top: 5px;
+			margin-right: 10px;
+		}
+
+	</style>
+</head>
+<body>
+
+
+	<!-- Header Area -->
+	<header class="header">
+		<!-- Topbar -->
+		<div class="topbar">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-6 col-md-5 col-12">
+						<!-- Contact -->
+						<ul class="top-link">
+							<li><a href="#">About</a></li>
+							<li><a href="#">Doctors</a></li>
+							<li><a href="#">Contact</a></li>
+							<li><a href="#">FAQ</a></li>
+						</ul>
+						<!-- End Contact -->
+					</div>
+					<div class="col-lg-6 col-md-7 col-12">
+						<!-- Top Contact -->
+						<ul class="top-contact">
+							<li><i class="fa fa-phone"></i>+880 1234 56789</li>
+							<li><i class="fa fa-envelope"></i><a href="mailto:support@yourmail.com">support@yourmail.com</a></li>
+						</ul>
+						<!-- End Top Contact -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- End Topbar -->
+		<!-- Header Inner -->
+		<div class="header-inner">
+			<div class="container">
+				<div class="inner">
+					<div class="row">
+						<div class="col-lg-3 col-md-3 col-12">
+							<!-- Start Logo -->
+							<div class="logo">
+								<a href=""><img src="~/ProjectTheme2/img/cliniclogo.png" alt="#"></a>
+							</div>
+							<!-- End Logo -->
+							<!-- Mobile Nav -->
+							<div class="mobile-nav"></div>
+							<!-- End Mobile Nav -->
+						</div>
+						<div class="col-lg-7 col-md-9 col-12">
+							<!-- Main Menu -->
+							<div class="main-menu">
+								<nav class="navigation">
+									<ul class="nav menu">
+										<li class="active">
+											<a href="#">Home <i class="icofont-rounded-down"></i></a>
+											<ul class="dropdown">
+												<li><a href="">Home Page 1</a></li>
+											</ul>
+										</li>
+										<li><a href="#">Doctos </a></li>
+										<li><a href="#">Services </a></li>
+										<li>
+											<a href="#">Pages <i class="icofont-rounded-down"></i></a>
+											<ul class="dropdown">
+												<li><a href="404.html">404 Error</a></li>
+											</ul>
+										</li>
+										<li>
+											<a href="#">Blogs <i class="icofont-rounded-down"></i></a>
+											<ul class="dropdown">
+												<li><a href="blog-single.html">Blog Details</a></li>
+											</ul>
+										</li>
+										<li><a href="contact.html">Contact Us</a></li>
+									</ul>
+								</nav>
+							</div>
+							<!--/ End Main Menu -->
+						</div>
+						<div class="col-lg-2 col-12">
+							<div class="get-quote">
+								<a href="appointment.html" class="btn">Book Appointment</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--/ End Header Inner -->
+	</header>
+	<!-- End Header Area -->
+	<!-- Breadcrumbs -->
+	<div class="breadcrumbs overlay">
+	</div>
+	<!-- End Breadcrumbs -->
+	<!-- Single News -->
+	<section class="news-single section">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-12">
+					<div class="row">
+						<div class="col-12">
+							<div class="single-main">
+								<p class="table-announcer">Bill Details</p>
+								<div class="news-head">
+									@{
+										string nameOfInsurance = InsuranceTypesEnum.GetInsuranceNameById(Model.BillData.InsuranceId);
+										bool doctorNotes = !String.IsNullOrEmpty(Model.BillData.DoctorsNotes);
+									}
+									<table class="table table-striped">
+										<tr>
+											<th>Bill ID</th>
+											<th>Doctor Name</th>
+											<th>Bill Total</th>
+											<th>Original Bill Total</th>
+											<th>Doctor Notes</th>
+											<th>Insurance</th>
+
+										</tr>
+
+										<tr>
+											<td>@Model.BillData.Id
+											<td>@Model.BillData.Appointment.User.UserName </td>
+											<td>$ @Model.BillData.Total </td>
+											<td>$ @Model.BillData.OriginalTotal </td>
+												@if (doctorNotes)
+												{
+												<td>@Model.BillData.DoctorsNotes </td>
+												}
+												else
+												{
+												<td>N/A</td>
+												}
+												@if (nameOfInsurance != null)
+												{
+												<td>@nameOfInsurance</td>
+												}
+												else
+												{
+												<td>N/A</td>
+												}
+										</tr>
+									</table>
+								</div>
+							</div>
+						</div>
+						<div class="col-12">
+							<div class="single-main">
+								<p class="table-announcer">Bill Items/Medication</p>
+								<div class="news-head">
+									<table class="table table-striped">
+										<tr>
+											<th>Name</th>
+											<th>Price</th>
+											<th>Description</th>
+										</tr>
+										@foreach (var item in Model.BillItems)
+										{
+											<tr>
+												<td>@item.Name</td>
+												<td>$ @item.Price </td>
+												<td>@item.Description </td>
+											</tr>
+										}
+									</table>
+								</div>
+							</div>
+						</div>
+						@if (Model.BillData.InsuranceId == 0)
+						{
+							<div class="col-12">
+								<div class="single-main">
+									<p class="table-announcer">Choose your insurance</p>
+									<div class="news-head">
+										<form asp-controller="Patient" asp-action="SelectInsuranceAndDiscount" class="authentication-form">
+
+											<input hidden asp-for="BillData.Id" value="@Model.BillData.Id" />
+											<input hidden asp-for="BillData.Total" value="@Model.BillData.Total" />
+											<input hidden asp-for="BillData.DoctorsNotes" value="@Model.BillData.DoctorsNotes" />
+											<input hidden asp-for="BillData.IsDoctorApproved" value="@Model.BillData.IsDoctorApproved" />
+											<input hidden asp-for="BillData.AppointmentId" value="@Model.BillData.AppointmentId" />
+
+											<div class="insurance-form-container">
+												<select asp-for="@Model.BillData.InsuranceId">
+													<option disabled> Select Insurance </option>
+													@for (var i = 0; i < InsuranceTypesEnum.InsuranceCoverage.Count(); i++)
+													{
+														<option value="@(i+1)">@InsuranceTypesEnum.InsuranceCoverage.ElementAt(i).Key</option>
+													}
+												</select>
+												<button class="btn btn-success" type="submit">Add Insurance</button>
+											</div>
+										</form>
+
+									</div>
+								</div>
+							</div>
+						}
+						<div class="col-12">
+							<div class="single-main">
+								<p class="table-announcer">Pay for your appointment</p>
+								<div class="news-head">
+									<form asp-controller="Patient" asp-action="CreateTransaction" class="authentication-form">
+										<input hidden asp-for="TransactionForm.BillId" value="@Model.BillData.Id" />
+										<input hidden asp-for="AppointmentId" value="@Model.BillData.AppointmentId" />
+										<input hidden asp-for="TransactionForm.PaymentAmount" value="@Model.BillData.Total" />
+
+										<!-- Add credit card fields -->
+										<div class="form-group">
+											<label>Card Number</label>
+											<input type="text" class="form-control" asp-for="@Model.TransactionForm.CardNumber">
+										</div>
+										<div class="form-group">
+											<label>Card Holder Name</label>
+											<input type="text" class="form-control" asp-for="@Model.TransactionForm.CardHolderName">
+										</div>
+										<div class="form-group">
+											<label>Expiry Month</label>
+											<input type="text" class="form-control" asp-for="@Model.TransactionForm.ExpiryMonth">
+										</div>
+										<div class="form-group">
+											<label>Expiry Year</label>
+											<input type="text" class="form-control" asp-for="@Model.TransactionForm.ExpiryYear">
+										</div>
+										<div class="form-group">
+											<label>CVV</label>
+											<input type="text" class="form-control" asp-for="@Model.TransactionForm.CVV">
+										</div>
+										<button class="btn btn-primary" type="submit">Pay $ @Model.BillData.Total</button>
+
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--/ End Single News -->
+	<!-- Footer Area -->
+	<partial name="_FooterPartial" />
+
+	<!--/ End Footer Area -->
+	<script src="~/ProjectTheme2/js/jquery.min.js"></script>
+	<script src="~/ProjectTheme2/js/jquery-migrate-3.0.0.js"></script>
+	<script src="~/ProjectTheme2/js/jquery-ui.min.js"></script>
+	<script src="~/ProjectTheme2/js/easing.js"></script>
+	<script src="~/ProjectTheme2/js/colors.js"></script>
+	<script src="~/ProjectTheme2/js/popper.min.js"></script>
+	<script src="~/ProjectTheme2/js/bootstrap-datepicker.js"></script>
+	<script src="~/ProjectTheme2/js/jquery.nav.js"></script>
+	<script src="~/ProjectTheme2/js/slicknav.min.js"></script>
+	<script src="~/ProjectTheme2/js/jquery.scrollUp.min.js"></script>
+	<script src="~/ProjectTheme2/js/niceselect.js"></script>
+	<script src="~/ProjectTheme2/js/tilt.jquery.min.js"></script>
+	<script src="~/ProjectTheme2/js/owl-carousel.js"></script>
+	<script src="~/ProjectTheme2/js/jquery.counterup.min.js"></script>
+	<script src="~/ProjectTheme2/js/steller.js"></script>
+	<script src="~/ProjectTheme2/js/wow.min.js"></script>
+	<script src="~/ProjectTheme2/js/jquery.magnific-popup.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+	<script src="~/ProjectTheme2/js/bootstrap.min.js"></script>
+	<script src="~/ProjectTheme2/js/main.js"></script>
+</body>
+</html>
+
+

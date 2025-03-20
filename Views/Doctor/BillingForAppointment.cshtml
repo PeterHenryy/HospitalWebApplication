@@ -1,0 +1,399 @@
+﻿@model BillViewModel
+
+@{
+	Layout = null;
+}
+<!doctype html>
+<html class="no-js" lang="zxx">
+<head>
+	<!-- Meta Tags -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="keywords" content="Site keywords here">
+	<meta name="description" content="">
+	<meta name='copyright' content=''>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link href="~/css/site.css" rel="stylesheet" />
+	<link href="~/css/billing-for-appointment.css" rel="stylesheet" />
+	<!-- Title -->
+	<title>Mediplus - Free Medical and Doctor Directory HTML Template.</title>
+
+	<!-- Favicon -->
+	<link rel="icon" href="~/ProjectTheme2/img/favicon.png">
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+	<link href="~/css/promis-form.css" rel="stylesheet" />
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="~/ProjectTheme2/css/bootstrap.min.css">
+	<!-- Nice Select CSS -->
+	<link rel="stylesheet" href="~/ProjectTheme2/css/nice-select.css">
+	<!-- Font Awesome CSS -->
+	<link rel="stylesheet" href="~/ProjectTheme2/css/font-awesome.min.css">
+	<!-- icofont CSS -->
+	<link rel="stylesheet" href="~/ProjectTheme2/css/icofont.css">
+	<!-- Slicknav -->
+	<link rel="stylesheet" href="~/ProjectTheme2/css/slicknav.min.css">
+	<!-- Owl Carousel CSS -->
+	<link rel="stylesheet" href="~/ProjectTheme2/css/owl-carousel.css">
+	<!-- Datepicker CSS -->
+	<link rel="stylesheet" href="~/ProjectTheme2/css/datepicker.css">
+	<!-- Animate CSS -->
+	<link rel="stylesheet" href="~/ProjectTheme2/css/animate.min.css">
+	<!-- Magnific Popup CSS -->
+	<link rel="stylesheet" href="~/ProjectTheme2/css/magnific-popup.css">
+
+	<!-- Medipro CSS -->
+	<link rel="stylesheet" href="~/ProjectTheme2/css/normalize.css">
+	<link rel="stylesheet" href="~/ProjectTheme2/style.css">
+	<link rel="stylesheet" href="~/ProjectTheme2/css/responsive.css">
+	<style>
+		.app-time {
+			border: 1px solid #fff;
+			padding: 20px 30px;
+			box-shadow: 2px 4px 10px 0px #c7cacce3;
+		}
+
+		.option-input {
+			-webkit-appearance: none;
+			-moz-appearance: none;
+			-ms-appearance: none;
+			-o-appearance: none;
+			appearance: none;
+			position: relative;
+			top: 5px;
+			right: 0;
+			bottom: 0;
+			left: 40px;
+			height: 20px;
+			width: 20px;
+			transition: all 0.15s ease-out 0s;
+			background: #fff;
+			border: 1px solid #999;
+			color: #fff;
+			cursor: pointer;
+			display: inline-block;
+			margin-right: 0.5rem;
+			outline: none;
+			position: relative;
+			z-index: 1000;
+		}
+
+			.option-input:hover {
+				background: #e5e7eb;
+			}
+
+			.option-input:checked {
+				border: 1px solid #fff;
+			}
+
+				.option-input:checked::before {
+					color: #d9486d;
+					height: 40px;
+					width: 40px;
+					position: absolute;
+					content: "✔";
+					display: inline-block;
+					font-size: 12px;
+					left: 4px;
+					line-height: 20px;
+				}
+
+				.option-input:checked::after {
+					-webkit-animation: click-wave 0.65s;
+					-moz-animation: click-wave 0.65s;
+					animation: click-wave 0.65s;
+					background: #40e0d0;
+					content: "";
+					display: block;
+					position: relative;
+					z-index: 100;
+				}
+
+			.option-input.radio {
+				border-radius: 50%;
+				calc(40.666% )
+			}
+
+				.option-input.radio::after {
+					border-radius: 50%;
+				}
+
+		.app-check {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 10px; /* Adjust the gap as needed */
+		}
+
+		.app-border {
+			border: 1px solid #ccc;
+			padding: 5px;
+			text-align: center;
+			width: 139px;
+			box-sizing: border-box;
+			margin-bottom: 11px;
+			margin-left: 16px;
+			transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out; /* Adding smooth transitions for both box-shadow and size changes */
+			border-radius: 8px; /* Adjust the value for the desired roundness */
+		}
+
+			.app-border:hover {
+				box-shadow: 0px 0px 5px rgba(26, 118, 209, 0.8); /* Blue color with 0.8 opacity for a shadow effect, with a smaller blur radius */
+				transform: scale(1.03); /* Slightly larger size on hover, adjust the scale factor as needed */
+			}
+
+
+
+		.option-input.radio:checked + .app-border {
+			background: #d9486d;
+		}
+
+		.option-input.radio:disabled,
+		.option-input.radio:disabled + .app-border {
+			cursor: not-allowed;
+			opacity: 0.6;
+		}
+
+		.app-label {
+			position: relative;
+			top: 5px;
+			margin-right: 10px;
+		}
+
+	</style>
+</head>
+<body>
+
+	<header class="header">
+		<partial name="_LoginPartial" />
+
+	</header>
+	<!-- End Header Area -->
+	<!-- Breadcrumbs -->
+	<div class="breadcrumbs overlay">
+	</div>
+	<!-- End Breadcrumbs -->
+	<!-- Single News -->
+	<div class="content-wrapper">
+
+		<section class="news-single section">
+			<div class="container-sm">
+				<div class="row justify-content-center" style="margin-bottom: 60px;">
+
+					<div class="col-8" style="box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.10); display: flex; flex-direction:column; align-items:center; padding: 15px;">
+						<h2 style="text-align: center; margin-bottom:25px">Appointment Details</h2>
+
+						<div class="table-responsive">
+
+							<table class="table table-striped  ">
+								<tr>
+									<th>Appointment Date</th>
+									<th>Start Time</th>
+									<th>End Time</th>
+									<th>Cost</th>
+									<th>Patient Name</th>
+									<th>Patient Note</th>
+									<th>Action</th>
+								</tr>
+								<tr>
+									<td>@Model.BillInfo.Appointment.AppointmentDate.ToString("MM/dd/yyyy")</td>
+									<td>@Model.BillInfo.Appointment.AppointmentStartTime</td>
+									<td>@Model.BillInfo.Appointment.AppointmentEndTime</td>
+									<td> <a style="color:black; font-weight: 400; font-size:13px">$</a>  @Model.BillInfo.Appointment.InitialTotal</td>
+									<td>@Model.BillInfo.Appointment.User.FirstName, @Model.BillInfo.Appointment.User.LastName</td>
+									<td>@Model.BillInfo.Appointment.Notes</td>
+									<td> <button class="btn btn-success" style="background-color: rgb(92, 155, 217);" id="add-bill-item-button">Add Bill Item</button></td>
+								</tr>
+
+							</table>
+						</div>
+						<div style="display: none; width: 100%;" id="bill-item-form">
+							<form asp-controller="Doctor" asp-action="CreateBillItems" id="bill-item-form">
+								<input type="text" class="form-control" hidden asp-for="@Model.BillItemForm.BillId" value="@Model.BillInfo.Id">
+								<input type="text" class="form-control" hidden asp-for="@Model.BillInfo.AppointmentId" value="@Model.BillInfo.AppointmentId">
+
+								<div class="form-group">
+									<label>Item Name</label>
+									<input type="text" class="form-control" asp-for="@Model.BillItemForm.Name" required>
+								</div>
+
+								<div class="form-group">
+									<label> Price</label>
+									<input class="form-control" asp-for="@Model.BillItemForm.Price" required>
+								</div>
+
+								<div class="form-group">
+									<label> Description</label>
+									<input type="text" class="form-control" asp-for="@Model.BillItemForm.Description" required>
+								</div>
+
+								<button type="submit" class="btn btn-primary" style="width: 100%; background-color: rgb(92, 155, 217);" id="create-item-button">Add Item</button>
+							</form>
+							@{
+								bool lateOrNoShowBill = Model.BillItemsAdded.Any(x => x.Name.Equals("Late appearance/No show"));
+							}
+							@if (!lateOrNoShowBill)
+							{
+								<p style="margin-top: 20px;">Patient was late or did not show up?</p>
+								<form asp-controller="Doctor" asp-action="CreateBillItems">
+									<input type="text" class="form-control" hidden asp-for="@Model.BillItemForm.BillId" value="@Model.BillInfo.Id">
+									<input type="text" class="form-control" hidden asp-for="@Model.BillInfo.AppointmentId" value="@Model.BillInfo.AppointmentId">
+									<input type="text" class="form-control" hidden asp-for="@Model.BillItemForm.Name" value="Late appearance/No show">
+									<input type="text" class="form-control" hidden asp-for="@Model.BillItemForm.Price" value="50">
+									<input type="text" class="form-control" hidden asp-for="@Model.BillItemForm.Description" value="Patient was late for appointment or did not show up">
+
+									<button type="submit" style="width: 100%; background-color: rgb(92, 155, 217);" class="btn btn-primary">Charge $50</button>
+								</form>
+							}
+						</div>
+					</div>
+				</div>
+
+
+				@*-------------------------------------------------------------------------------------------
+				Medication Section
+				-------------------------------------------------------------------------------------------*@
+				@if (Model.BillItemsAdded.Count() != 0)
+				{
+					<div class="row justify-content-center" style="margin-bottom: 60px;">
+
+						<div class="col-8" style="box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.10); display: flex; flex-direction:column; align-items:center; padding: 15px;">
+							<h2 style="text-align: center; margin-bottom:25px">Items & Medication</h2>
+							<div class="table-responsive">
+								<table class="table table-striped  ">
+									<tr>
+										<th>Name</th>
+										<th>Price</th>
+										<th>Description</th>
+										<th>Action</th>
+									</tr>
+
+									@foreach (var billItem in Model.BillItemsAdded)
+									{
+										<tr>
+											<td>@billItem.Name</td>
+											<td>$ @billItem.Price</td>
+											<td>@billItem.Description</td>
+											<td> <a class="btn btn-danger" style="background: red;" href="@Url.Action("RemoveBillItem", "Doctor", new {billItemID = billItem.Id, appointmentID = Model.BillInfo.AppointmentId, billItem.BillId})">Remove</a></td>
+										</tr>
+									}
+								</table>
+								<p style="font-size: 20px; font-weight: bold; color: black; text-align: center;">Appointment Bill after added items/medications: $ @Model.BillInfo.Total</p>
+							</div>
+
+						</div>
+					</div>
+
+				}
+				@*-------------------------------------------------------------------------------------------
+				Promis10
+				-------------------------------------------------------------------------------------------*@
+				<div class="container-sm">
+					<div class="row justify-content-center" style="margin-bottom: 30px;">
+
+						<div class="col-8" style="box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.10); display: flex; flex-direction:column; align-items:center; padding: 15px;">
+							<h2 style="text-align: center;margin-bottom: 25px; color: black;">Patient's PROMIS10 form</h2>
+							<div class="meta promis-form-container" style="padding: 20px; background-color: white; color: black;">
+								<p class="question-announcement" style="color: black; text-align:center;">Patient considered their previous 7 days when answering</p>
+								<p style="text-align: center;color:black; margin-bottom: 20px; font-size: 16px;">1-5 (1 being Bad, 5 being Great)</p>
+								<div class="meta-left promis-questions-container">
+
+
+									@{
+										PROMIS10 promis10 = Model.Promis;
+										var questions = PROMIS10_Questions.QuestionsList;
+										var answers = new List<int>
+									{
+									promis10.Answer1,
+									promis10.Answer2,
+									promis10.Answer3,
+									promis10.Answer4,
+									promis10.Answer5,
+									promis10.Answer6,
+									promis10.Answer7,
+									};
+
+										<table class="table table-striped  ">
+											<tr>
+												<th>Questions</th>
+												<th>Answers</th>
+											</tr>
+											@for (int i = 0; i < questions.Count(); i++)
+											{
+												<tr>
+													<td>@questions[i]</td>
+													<td style="vertical-align: middle;">@answers[i]</td>
+												</tr>
+											}
+										</table>
+									}
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="row justify-content-center">
+
+					<div class="col-8" style="padding: 0;">
+						<div class="single-main">
+							<form asp-controller="Doctor" asp-action="SendBillToPatient">
+								<input type="text" class="form-control" hidden asp-for="@Model.BillForm.Id" value="@Model.BillInfo.Id">
+								<input type="text" class="form-control" hidden asp-for="@Model.BillForm.OriginalTotal" value="@Model.BillInfo.OriginalTotal">
+								<input type="text" class="form-control" hidden asp-for="@Model.BillForm.Total" value="@Model.BillInfo.Total">
+								<input type="text" class="form-control" hidden asp-for="@Model.BillForm.AppointmentId" value="@Model.BillInfo.AppointmentId">
+
+								<div class="form-group">
+									<label> Doctor Notes</label>
+									<input type="text" class="form-control" asp-for="@Model.BillForm.DoctorsNotes">
+								</div>
+
+								<button type="submit" style="width: 100%; background-color: rgb(92, 155, 217);" class="btn btn-primary">Bill Patient $ @Model.BillInfo.Total</button>
+							</form>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</section>
+	</div>
+	<partial name="_FooterPartial" />
+
+	<!--/ End Single News -->
+	<!--/ End Footer Area -->
+	<script src="~/ProjectTheme2/js/jquery.min.js"></script>
+	<script src="~/ProjectTheme2/js/jquery-migrate-3.0.0.js"></script>
+	<script src="~/ProjectTheme2/js/jquery-ui.min.js"></script>
+	<script src="~/ProjectTheme2/js/easing.js"></script>
+	<script src="~/ProjectTheme2/js/colors.js"></script>
+	<script src="~/ProjectTheme2/js/popper.min.js"></script>
+	<script src="~/ProjectTheme2/js/bootstrap-datepicker.js"></script>
+	<script src="~/ProjectTheme2/js/jquery.nav.js"></script>
+	<script src="~/ProjectTheme2/js/slicknav.min.js"></script>
+	<script src="~/ProjectTheme2/js/jquery.scrollUp.min.js"></script>
+	<script src="~/ProjectTheme2/js/niceselect.js"></script>
+	<script src="~/ProjectTheme2/js/tilt.jquery.min.js"></script>
+	<script src="~/ProjectTheme2/js/owl-carousel.js"></script>
+	<script src="~/ProjectTheme2/js/jquery.counterup.min.js"></script>
+	<script src="~/ProjectTheme2/js/steller.js"></script>
+	<script src="~/ProjectTheme2/js/wow.min.js"></script>
+	<script src="~/ProjectTheme2/js/jquery.magnific-popup.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+	<script src="~/ProjectTheme2/js/bootstrap.min.js"></script>
+	<script src="~/ProjectTheme2/js/main.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+	<!-- Your other head elements -->
+
+	<script>
+		$(document).ready(() => {
+			$("#bill-item-form").hide();
+
+			$("#add-bill-item-button").click(() => {
+				$("#bill-item-form").toggle("slow");
+			});
+		});
+	</script>
+</body>
+</html>
+
+

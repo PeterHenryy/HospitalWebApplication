@@ -1,8 +1,9 @@
-﻿@model RegisterDoctorAndUserViewModelForm
+﻿@model DoctorDetailsViewModel
+@using Microsoft.AspNetCore.Identity
 
-@using System.Text.RegularExpressions;
 @{
 	Layout = null;
+	bool patientRole = User.IsInRole(UserRolesEnum.Patient.ToString());
 }
 <!doctype html>
 <html class="no-js" lang="zxx">
@@ -14,18 +15,16 @@
 	<meta name="description" content="">
 	<meta name='copyright' content=''>
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link href="~/css/site.css" rel="stylesheet" />
-	<link href="~/css/billing-for-appointment.css" rel="stylesheet" />
-	<link href="~/css/admin-doctors-index.css" rel="stylesheet" />
+
 	<!-- Title -->
-	<title>Online Hospital</title>
-	<link href="~/css/general.css" rel="stylesheet" />
+	<title>Mediplus - Free Medical and Doctor Directory HTML Template.</title>
+
 	<!-- Favicon -->
 	<link rel="icon" href="~/ProjectTheme2/img/favicon.png">
-	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 	<!-- Google Fonts -->
 	<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
-	<link href="~/css/promis-form.css" rel="stylesheet" />
+
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="~/ProjectTheme2/css/bootstrap.min.css">
 	<!-- Nice Select CSS -->
@@ -101,25 +100,30 @@
 					line-height: 20px;
 				}
 
-				.option-input:checked::after {
-					-webkit-animation: click-wave 0.65s;
-					-moz-animation: click-wave 0.65s;
-					animation: click-wave 0.65s;
-					background: #40e0d0;
-					content: "";
-					display: block;
-					position: relative;
-					z-index: 100;
-				}
+		.book-appointment-button:hover {
+			cursor: pointer;
+		}
 
-			.option-input.radio {
+		.option-input:checked::after {
+			-webkit-animation: click-wave 0.65s;
+			-moz-animation: click-wave 0.65s;
+			animation: click-wave 0.65s;
+			background: #40e0d0;
+			content: "";
+			display: block;
+			position: relative;
+			z-index: 100;
+		}
+
+
+		.option-input.radio {
+			border-radius: 50%;
+			calc(40.666% )
+		}
+
+			.option-input.radio::after {
 				border-radius: 50%;
-				calc(40.666% )
 			}
-
-				.option-input.radio::after {
-					border-radius: 50%;
-				}
 
 		.app-check {
 			display: flex;
@@ -150,15 +154,14 @@
 			background: #d9486d;
 		}
 
-		.list {
-			display: grid;
-			grid-template-columns: repeat(1, 1fr);
-		}
-
 		.option-input.radio:disabled,
 		.option-input.radio:disabled + .app-border {
 			cursor: not-allowed;
 			opacity: 0.6;
+		}
+
+		#hover-helper:hover {
+			cursor: pointer;
 		}
 
 		.app-label {
@@ -166,95 +169,149 @@
 			top: 5px;
 			margin-right: 10px;
 		}
+
 	</style>
 </head>
 <body>
 
+
+	<!-- Header Area -->
 	<header class="header">
 		<partial name="_LoginPartial" />
-
 	</header>
 	<!-- End Header Area -->
 	<!-- Breadcrumbs -->
 	<div class="breadcrumbs overlay">
+		<div class="container">
+			<div class="bread-inner">
+				<div class="row">
+					<div class="col-12">
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 	<!-- End Breadcrumbs -->
 	<!-- Single News -->
 	<section class="news-single section">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-12 col-12">
+				<div class="col-lg-8 col-12">
 					<div class="row">
 						<div class="col-12">
 							<div class="single-main">
+								<!-- News Head -->
 								<div class="news-head">
+									<img src="~/profilepics/@Model.Doctor.User.ProfilePicture" style="width:100%" alt="#">
+								</div>
+								<!-- News Title -->
+								<h1 class="news-title"><a>@Model.Doctor.DoctorRole, Dr.@Model.Doctor.User.UserName</a></h1>
+								<!-- Meta -->
+								<div class="meta">
+									<div class="meta-left">
+									</div>
+								</div>
+								<!-- News Text -->
+								<div class="news-text">
+									<div class="app-time">
+										<p style="color:black; font-weight: 700; font-size:23px;text-align:center">Appointments</p>
+										<br />
+										@if (Model.DoctorAppointments.Count() == 0)
+										{
+											<p style="color:black; font-weight: 700; font-size:30px;text-align:center">No Available Appointments</p>
 
-									<div class="login-form-container container">
-										<h2 style="text-align: center;margin-bottom: 25px;">Add a New Doctor</h2>
-										<form asp-controller="Admin" asp-action="RegisterDoctor" class="authentication-form">
-											<div class="row">
-												<div class="col-md-6">
-													<label for="inputEmail4" class="form-label">UserName</label>
-													<input asp-for="UserDataForm.UserName" class="form-control" id="inputEmail4" required>
-												</div>
-												<div class="col-md-6">
-													<label for="inputEmail4" class="form-label">Email</label>
-													<input type="email" asp-for="UserDataForm.Email" class="form-control" id="inputEmail4" required>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-md-6">
-													<label for="inputEmail4" class="form-label">First Name</label>
-													<input asp-for="UserDataForm.FirstName" class="form-control" id="inputEmail4" required>
-												</div>
-												<div class="col-md-6">
-													<label for="inputEmail4" class="form-label">Last Name</label>
-													<input asp-for="UserDataForm.LastName" class="form-control" id="inputEmail4" required>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-md-12">
-													<label for="inputEmail4" class="form-label">Password</label>
-													<input type="password" asp-for="UserDataForm.Password" class="form-control" id="inputEmail4" required>
-												</div>
-											</div>
-											<div class="row">
-												<div style="margin-top:14px; margin-left: 14px">
-
-													@{
-														List<string> rolesFormatted = new List<string>();
-														foreach (var role in Model.DoctorRoles)
+										}
+										else
+										{
+											@foreach (var item in Model.AppointmentsByMonths.OrderBy(x => x.Key))
+											{
+												<p style="color:black; font-weight: 700; font-size:17px">@Model.GetMonthNameByNumber(item.Key)</p>
+												<div class="row">
+													@foreach (var appointment in item.Value)
+													{
+														if (patientRole)
 														{
-															string formattedRole = Regex.Replace(role, "[-_]", " ");
 
-															rolesFormatted.Add(formattedRole);
+															<a class="book-appointment-button" href="@Url.Action("BookAppointment", "Patient", new {appointmentId = appointment.ID})">
+																<div class="app-check">
+																	<div class="app-border">
+
+																		<label class="app-label" style="cursor: pointer;">
+																			@appointment.AppointmentDate.ToString("MM/dd/yyyy")
+																			<br />
+																			@appointment.AppointmentStartTime
+																		</label>
+																	</div>
+
+																</div>
+															</a>
+														}
+														else
+														{
+															<div class="app-check">
+																<div class="app-border">
+
+																	<label class="app-label">
+																		@appointment.AppointmentDate.ToString("MM/dd/yyyy")
+																		<br />
+																		@appointment.AppointmentStartTime
+																	</label>
+																</div>
+
+															</div>
 														}
 													}
-													<p style="font-weight: bold; margin-bottom: 15px;">Select a Doctor Role</p>
-													<select asp-for="DoctorDataForm.DoctorRole" asp-items="new SelectList(rolesFormatted)" required>
-													</select>
 												</div>
+											}
+										}
 
 
-											</div>
-
-
-											<button class="btn btn-primary" type="submit" style="background-color: rgb(92, 155, 217); width:100%;">Add Doctor</button>
-
-
-										</form>
 									</div>
 								</div>
 							</div>
 						</div>
+
+					</div>
+				</div>
+				<div class="col-lg-4 col-12">
+					<div class="main-sidebar">
+						<!-- Single Widget -->
+						<div class="single-widget category">
+							<h3 class="title">Doctor Bio</h3>
+							<p>
+								@(Model.Doctor.Bio != null ? Model.Doctor.Bio : "Specialist at Ineza Physiotherapy Clinic")
+							</p>
+						</div>
+						<!--/ End Single Widget -->
+						<!-- Single Widget -->
+						<div class="single-widget category">
+							<h3 class="title">Doctor Details</h3>
+							<ul class="categor-list" style="display: flex; flex-direction: column; align-items: start;">
+								<li><a> <span style="color:black;font-weight:500">Specialty:</span> @Model.Doctor.DoctorRole</a></li>
+								<li><a> <span style="color:black;font-weight:500">Email:</span> @Model.Doctor.User.Email</a></li>
+								<li><a> <span style="color:black;font-weight:500">Phone:</span> @(Model.Doctor.User.PhoneNumber != null ? Model.Doctor.User.PhoneNumber : "N/A") </a></li>
+							</ul>
+						</div>
+						<!--/ End Single Widget -->
+						<!-- Single Widget -->
+						<div class="single-widget side-tags">
+							<h3 class="title">Tags</h3>
+							<ul class="tag" style="display: grid;">
+								@foreach (var item in DoctorRolesEnum.RolesKeywords[@Model.Doctor.DoctorRole.Replace(" ", "_")])
+								{
+									<li><a>@item</a></li>
+								}
+							</ul>
+						</div>
+						<!--/ End Single Widget -->
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
+	<!--/ End Single News -->
 	<partial name="_FooterPartial" />
 
-	<!--/ End Single News -->
 	<!--/ End Footer Area -->
 	<script src="~/ProjectTheme2/js/jquery.min.js"></script>
 	<script src="~/ProjectTheme2/js/jquery-migrate-3.0.0.js"></script>
@@ -276,21 +333,5 @@
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
 	<script src="~/ProjectTheme2/js/bootstrap.min.js"></script>
 	<script src="~/ProjectTheme2/js/main.js"></script>
-	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-	<!-- Your other head elements -->
-
-	<script>
-		$(document).ready(() => {
-			$("#bill-item-form").hide();
-
-			$("#add-bill-item-button").click(() => {
-				$("#bill-item-form").toggle("slow");
-			});
-
-			$("#create-item-button").click(() => {
-				$("#bill-item-form").hide("slow");
-			});
-		});
-	</script>
 </body>
 </html>
