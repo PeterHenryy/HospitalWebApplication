@@ -1,0 +1,365 @@
+﻿@model Appointment
+
+@using System.Text.RegularExpressions;
+@{
+	Layout = null;
+}
+<!doctype html>
+<html class="no-js" lang="zxx">
+<head>
+	<!-- Meta Tags -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="keywords" content="Site keywords here">
+	<meta name="description" content="">
+	<meta name='copyright' content=''>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link href="~/css/site.css" rel="stylesheet" />
+	<link href="~/css/billing-for-appointment.css" rel="stylesheet" />
+	<link href="~/css/admin-doctors-index.css" rel="stylesheet" />
+	<!-- Title -->
+	<title>Mediplus - Free Medical and Doctor Directory HTML Template.</title>
+	<link href="~/css/general.css" rel="stylesheet" />
+	<!-- Favicon -->
+	<link rel="icon" href="~/ProjectTheme2/img/favicon.png">
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+	<link href="~/css/promis-form.css" rel="stylesheet" />
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="~/ProjectTheme2/css/bootstrap.min.css">
+	<!-- Nice Select CSS -->
+	<link rel="stylesheet" href="~/ProjectTheme2/css/nice-select.css">
+	<!-- Font Awesome CSS -->
+	<link rel="stylesheet" href="~/ProjectTheme2/css/font-awesome.min.css">
+	<!-- icofont CSS -->
+	<link rel="stylesheet" href="~/ProjectTheme2/css/icofont.css">
+	<!-- Slicknav -->
+	<link rel="stylesheet" href="~/ProjectTheme2/css/slicknav.min.css">
+	<!-- Owl Carousel CSS -->
+	<link rel="stylesheet" href="~/ProjectTheme2/css/owl-carousel.css">
+	<!-- Datepicker CSS -->
+	<link rel="stylesheet" href="~/ProjectTheme2/css/datepicker.css">
+	<!-- Animate CSS -->
+	<link rel="stylesheet" href="~/ProjectTheme2/css/animate.min.css">
+	<!-- Magnific Popup CSS -->
+	<link rel="stylesheet" href="~/ProjectTheme2/css/magnific-popup.css">
+
+	<!-- Medipro CSS -->
+	<link rel="stylesheet" href="~/ProjectTheme2/css/normalize.css">
+	<link rel="stylesheet" href="~/ProjectTheme2/style.css">
+	<link rel="stylesheet" href="~/ProjectTheme2/css/responsive.css">
+	<style>
+		.app-time {
+			border: 1px solid #fff;
+			padding: 20px 30px;
+			box-shadow: 2px 4px 10px 0px #c7cacce3;
+		}
+
+		.option-input {
+			-webkit-appearance: none;
+			-moz-appearance: none;
+			-ms-appearance: none;
+			-o-appearance: none;
+			appearance: none;
+			position: relative;
+			top: 5px;
+			right: 0;
+			bottom: 0;
+			left: 40px;
+			height: 20px;
+			width: 20px;
+			transition: all 0.15s ease-out 0s;
+			background: #fff;
+			border: 1px solid #999;
+			color: #fff;
+			cursor: pointer;
+			display: inline-block;
+			margin-right: 0.5rem;
+			outline: none;
+			position: relative;
+			z-index: 1000;
+		}
+
+			.option-input:hover {
+				background: #e5e7eb;
+			}
+
+			.option-input:checked {
+				border: 1px solid #fff;
+			}
+
+				.option-input:checked::before {
+					color: #d9486d;
+					height: 40px;
+					width: 40px;
+					position: absolute;
+					content: "✔";
+					display: inline-block;
+					font-size: 12px;
+					left: 4px;
+					line-height: 20px;
+				}
+
+				.option-input:checked::after {
+					-webkit-animation: click-wave 0.65s;
+					-moz-animation: click-wave 0.65s;
+					animation: click-wave 0.65s;
+					background: #40e0d0;
+					content: "";
+					display: block;
+					position: relative;
+					z-index: 100;
+				}
+
+			.option-input.radio {
+				border-radius: 50%;
+				calc(40.666% )
+			}
+
+				.option-input.radio::after {
+					border-radius: 50%;
+				}
+
+		.app-check {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 10px; /* Adjust the gap as needed */
+		}
+
+		.app-border {
+			border: 1px solid #ccc;
+			padding: 5px;
+			text-align: center;
+			width: 139px;
+			box-sizing: border-box;
+			margin-bottom: 11px;
+			margin-left: 16px;
+			transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out; /* Adding smooth transitions for both box-shadow and size changes */
+			border-radius: 8px; /* Adjust the value for the desired roundness */
+		}
+
+			.app-border:hover {
+				box-shadow: 0px 0px 5px rgba(26, 118, 209, 0.8); /* Blue color with 0.8 opacity for a shadow effect, with a smaller blur radius */
+				transform: scale(1.03); /* Slightly larger size on hover, adjust the scale factor as needed */
+			}
+
+
+
+		.option-input.radio:checked + .app-border {
+			background: #d9486d;
+		}
+
+		.option-input.radio:disabled,
+		.option-input.radio:disabled + .app-border {
+			cursor: not-allowed;
+			opacity: 0.6;
+		}
+
+		.app-label {
+			position: relative;
+			top: 5px;
+			margin-right: 10px;
+		}
+
+		#datewarn {
+			margin-bottom: 5px;
+			color: red;
+		}
+
+		ul {
+			display: grid;
+			flex-direction: column;
+			grid-template-columns: repeat(5, 1fr);
+		}
+	</style>
+</head>
+<body>
+
+	<!-- Header Area -->
+	<header class="header">
+		<partial name="_LoginPartial" />
+
+	</header>
+	<!-- End Header Area -->
+	<!-- Breadcrumbs -->
+	<div class="breadcrumbs overlay">
+	</div>
+	<!-- End Breadcrumbs -->
+	<!-- Single News -->
+	<section class="news-single section">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-12">
+					<div class="row">
+						<div class="col-12">
+							<div class="single-main">
+								<div class="news-head">
+
+									<div class="login-form-container container">
+										<h2 style="text-align: center;margin-bottom: 25px;">Create Appointment form</h2>
+
+										<form asp-controller="Admin" asp-action="CreateAppointment" onsubmit="return validateForm()">
+
+
+											<div class="form-group">
+												<label>Select the Date</label>
+												<input type="date" name="appointmentDate" class="form-control" id="appointmentDate" asp-for="AppointmentDate" onchange="checkDate()" required>
+											</div>
+											<div id="datewarn"></div>
+
+											<div class="form-group">
+												<label>Appointment Price</label>
+												<input type="text" class="form-control" asp-for="InitialTotal">
+											</div>
+											<input hidden asp-for="DoctorID" value="@Model.DoctorID" />
+											<div class="row">
+												<div class="form-group" style="margin-left: 15px">
+													<label>Start Time</label>
+													<br />
+													<select id="AppointmentStartTime" asp-for="AppointmentStartTime" class="time-select">
+														@foreach (var time in ViewBag.AppointmentTimes)
+														{
+															<option value="@time">@time</option>
+														}
+													</select>
+													<br />
+												</div>
+
+												<div class="form-group" style="margin-left: 15px">
+													<label>End Time</label>
+													<br />
+													<select id="AppointmentEndTime" asp-for="AppointmentEndTime" class="time-select">
+														@foreach (var time in ViewBag.AppointmentTimes)
+														{
+															<option value="@time">@time</option>
+														}
+													</select>
+													<br />
+												</div>
+
+
+												<br />
+											</div>
+											<div id="timeError" style="color: red; display: none; margin-bottom: 15px;">Start time must be before end time.</div>
+
+											<!-- Add the form submit button -->
+											<button type="submit" id="submitButton" class="btn btn-primary" style="width: 100%;background-color: rgb(92, 155, 217);">Submit</button>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<partial name="_FooterPartial" />
+
+	<!--/ End Single News -->
+	<script>
+		// Get the current date in the format YYYY-MM-DD
+		var currentDate = new Date().toISOString().split('T')[0];
+
+		// Set the value of the input to the current date
+		document.getElementById('appointmentDate').value = currentDate;
+
+
+	</script>
+	<!--/ End Footer Area -->
+	<script src="~/ProjectTheme2/js/jquery.min.js"></script>
+	<script src="~/ProjectTheme2/js/jquery-migrate-3.0.0.js"></script>
+	<script src="~/ProjectTheme2/js/jquery-ui.min.js"></script>
+	<script src="~/ProjectTheme2/js/easing.js"></script>
+	<script src="~/ProjectTheme2/js/colors.js"></script>
+	<script src="~/ProjectTheme2/js/popper.min.js"></script>
+	<script src="~/ProjectTheme2/js/bootstrap-datepicker.js"></script>
+	<script src="~/ProjectTheme2/js/jquery.nav.js"></script>
+	<script src="~/ProjectTheme2/js/slicknav.min.js"></script>
+	<script src="~/ProjectTheme2/js/jquery.scrollUp.min.js"></script>
+	<script src="~/ProjectTheme2/js/niceselect.js"></script>
+	<script src="~/ProjectTheme2/js/tilt.jquery.min.js"></script>
+	<script src="~/ProjectTheme2/js/owl-carousel.js"></script>
+	<script src="~/ProjectTheme2/js/jquery.counterup.min.js"></script>
+	<script src="~/ProjectTheme2/js/steller.js"></script>
+	<script src="~/ProjectTheme2/js/wow.min.js"></script>
+	<script src="~/ProjectTheme2/js/jquery.magnific-popup.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+	<script src="~/ProjectTheme2/js/bootstrap.min.js"></script>
+	<script src="~/ProjectTheme2/js/main.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+	<!-- Your other head elements -->
+
+	<script>
+		$(document).ready(() => {
+			$("#bill-item-form").hide();
+
+			$("#add-bill-item-button").click(() => {
+				$("#bill-item-form").toggle("slow");
+			});
+
+			$("#create-item-button").click(() => {
+				$("#bill-item-form").hide("slow");
+			});
+		});
+
+		function validateForm() {
+		  var inputDate = document.getElementById('appointmentDate').value; // Get the input date as a string (YYYY-MM-DD)
+		  var currentDate = new Date(); // Current date
+
+		  // Convert current date to YYYY-MM-DD format (without time)
+		  var currentDateString = currentDate.toISOString().split('T')[0]; // This gives the format 'YYYY-MM-DD'
+
+		  // Compare only the date part (ignore time)
+		  if (inputDate === currentDateString) {
+			document.getElementById('datewarn').textContent = ''; // Clear any previous error
+			return true; // Allow form submission
+		  } else if (inputDate < currentDateString) {
+			document.getElementById('datewarn').textContent = 'Please select today or a future date.';
+			return false; // Prevent form submission
+		  } else {
+			document.getElementById('datewarn').textContent = ''; // Clear any previous error
+			return true; // Allow form submission
+		  }
+		}
+	</script>
+	<script>
+		function convertTo24Hour(time) {
+			// This function converts 12-hour time to 24-hour format
+			let [hour, minuteAndPeriod] = time.split(":");
+			let [minute, period] = minuteAndPeriod.split(" ");
+			hour = parseInt(hour);
+			minute = parseInt(minute);
+
+			// Adjust hour based on AM/PM
+			if (period === "AM" && hour === 12) {
+				hour = 0;  // 12 AM is 00 in 24-hour time
+			} else if (period === "PM" && hour !== 12) {
+				hour += 12; // Convert PM times (except for 12 PM which is already correct)
+			}
+
+			return new Date(1970, 0, 1, hour, minute); // Return a Date object for comparison
+		}
+
+		document.getElementById("submitButton").addEventListener("click", function(event) {
+			var startTime = document.getElementById("AppointmentStartTime").value;
+			var endTime = document.getElementById("AppointmentEndTime").value;
+
+			// Convert the time strings to Date objects using the convertTo24Hour function
+			var startDate = convertTo24Hour(startTime);
+			var endDate = convertTo24Hour(endTime);
+
+			// Reset error message
+			document.getElementById("timeError").style.display = "none";
+
+			// Check if start time is greater than or equal to end time
+			if (startDate >= endDate) {
+				// Show the error message and prevent form submission
+				document.getElementById("timeError").style.display = "block";
+				event.preventDefault(); // Prevent form submission
+			}
+		});
+	</script>
+</body>
+</html>
