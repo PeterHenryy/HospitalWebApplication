@@ -12,13 +12,13 @@ namespace HospitalWebApplication.Models.Doctors
         public string DoctorRole { get; set; }
         public int HierarchyStatus { get; set; }
         public string? Bio { get; set; }
-        public string ProfilePictureURI { get; set; }
+        public string? ProfilePictureURI { get; set; }
         public bool Active { get; set; } = true;
 
         // References
         [ForeignKey("AspNetUsers")]
         public int UserID { get; set; }
-        public virtual AppUser User { get; set; }
+        public virtual AppUser? User { get; set; }
 
     }
 }

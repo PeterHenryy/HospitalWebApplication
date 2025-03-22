@@ -40,29 +40,46 @@ namespace HospitalWebApplication.Controllers
         }
 
         [HttpPost]
-        public async Task<RedirectToActionResult> RegisterDoctor(RegisterDoctorAndUserViewModelForm doctor)
+        public async Task<IActionResult> RegisterDoctor(RegisterDoctorAndUserViewModelForm doctor)
         {
-            // Creating AppUser and registering to database with "Doctor" role
-            AppUser appUser = doctor.UserDataForm;
-            appUser.ProfilePicture = "user-doctor-solid.svg";
+                
+                var existingUserName = await _userManager.FindByNameAsync(doctor.UserDataForm.UserName);
+                if (existingUserName != null)
+                {   
+                    ModelState.AddModelError("userName", "A doctor with this username already exists or was previously removed");
+                    var registerDoctorForm = new RegisterDoctorAndUserViewModelForm();
+                    return View(registerDoctorForm);
+                }
+                var existingUserEmail = await _userManager.FindByEmailAsync(doctor.UserDataForm.Email);
+                if (existingUserEmail != null)
+                {
+                    // If email is already taken, add a model error
+                    ModelState.AddModelError("Email", "A doctor with this email already exists or was previously removed ");
+                    var registerDoctorForm = new RegisterDoctorAndUserViewModelForm();
+                    return View(registerDoctorForm);
+            }
+                // Creating AppUser and registering to database with "Doctor" role
+                AppUser appUser = doctor.UserDataForm;
+                appUser.ProfilePicture = "user-doctor-solid.svg";
 
-            // Creating role 
-            var role = UserRolesEnum.Doctor.ToString();
+                // Creating role 
+                var role = UserRolesEnum.Doctor.ToString();
 
-            // Creating user
-            var userRegister = await _userManager.CreateAsync(appUser);
+                // Creating user
+                var userRegister = await _userManager.CreateAsync(appUser);
 
-            // Assigning doctor role to user
-            var assignRole = await _userManager.AddToRoleAsync(appUser, role);
+                // Assigning doctor role to user
+                var assignRole = await _userManager.AddToRoleAsync(appUser, role);
 
-            // Creating doctor instance and registering it to database
-            Doctor newDoctor = doctor.DoctorDataForm;
-            newDoctor.User = appUser;
-            newDoctor.Bio = "Specialist at Ineza Physiotherapy Clinic";
-            newDoctor.ProfilePictureURI = "/profilepics/user-doctor-solid.svg";
+                // Creating doctor instance and registering it to database
+                Doctor newDoctor = doctor.DoctorDataForm;
+                newDoctor.User = appUser;
+                newDoctor.Bio = "Specialist at Ineza Physiotherapy Clinic";
+                newDoctor.ProfilePictureURI = "/profilepics/user-doctor-solid.svg";
 
-            bool addedDoctor = await _doctorService.CreateAsync(newDoctor);
-            return RedirectToAction("DoctorsIndex", "Admin");
+                bool addedDoctor = await _doctorService.CreateAsync(newDoctor);
+            
+                return RedirectToAction("DoctorsIndex", "Admin");
 
         }
 
