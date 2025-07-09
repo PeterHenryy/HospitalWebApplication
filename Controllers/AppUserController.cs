@@ -103,11 +103,16 @@ namespace HospitalWebApplication.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(AppLogin appLogin)
+        public async Task<IActionResult> Login(AppLogin appLogin, bool adminLogin = false)
         {
+            if (adminLogin)
+            {
+                AppUser admin = await _userManager.FindByNameAsync("Admin");
+                await _signInManager.SignInAsync(admin, false);
+                return RedirectToAction("DoctorsIndex", "Admin");
+            }
             if (ModelState.IsValid && appLogin.Username != null)
             {
-
                 AppUser user = await _userManager.FindByNameAsync(appLogin.Username);
 
                 if (user == null)

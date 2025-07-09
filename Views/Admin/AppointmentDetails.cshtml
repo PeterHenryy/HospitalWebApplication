@@ -207,7 +207,7 @@
 									<td>@Model.Appointment.AppointmentStartTime</td>
 									<td>@Model.Appointment.AppointmentEndTime</td>
 									<td> <a style="color:black; font-weight: 400; font-size:13px">$</a>  @Model.Appointment.InitialTotal</td>
-									<td>@Model.Appointment.User.FirstName, @Model.Appointment.User.LastName</td>
+									<td>@Model.Appointment.User.FirstName @Model.Appointment.User.LastName</td>
 									<td>@notes</td>
 								</tr>
 							</tbody>
@@ -245,7 +245,7 @@
 							<tbody>
 
 								<tr>
-									<td>@Model.Bill.Appointment.User.UserName </td>
+									<td>@Model.Bill.Appointment.Doctor.User.FirstName @Model.Bill.Appointment.Doctor.User.LastName </td>
 									<td>$ @Model.Bill.Total </td>
 									<td>$ @Model.Bill.OriginalTotal </td>
 									@if (doctorNotes)

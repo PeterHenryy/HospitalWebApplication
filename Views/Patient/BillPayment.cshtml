@@ -198,7 +198,7 @@
 
 							<tr>
 								<td>@Model.BillData.Id
-								<td>@Model.BillData.Appointment.User.UserName </td>
+								<td>@Model.BillData.Appointment.Doctor.User.FirstName @Model.BillData.Appointment.Doctor.User.LastName </td>
 								<td>$ @Model.BillData.Total </td>
 								<td>$ @Model.BillData.OriginalTotal </td>
 									@if (doctorNotes)

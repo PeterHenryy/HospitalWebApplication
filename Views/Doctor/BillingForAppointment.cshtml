@@ -192,7 +192,7 @@
 									<th>End Time</th>
 									<th>Cost</th>
 									<th>Patient Name</th>
-									<th>Patient Note</th>
+									<th>Patient Notes</th>
 									<th>Action</th>
 								</tr>
 								<tr>
@@ -200,7 +200,7 @@
 									<td>@Model.BillInfo.Appointment.AppointmentStartTime</td>
 									<td>@Model.BillInfo.Appointment.AppointmentEndTime</td>
 									<td> <a style="color:black; font-weight: 400; font-size:13px">$</a>  @Model.BillInfo.Appointment.InitialTotal</td>
-									<td>@Model.BillInfo.Appointment.User.FirstName, @Model.BillInfo.Appointment.User.LastName</td>
+									<td>@Model.BillInfo.Appointment.User.FirstName @Model.BillInfo.Appointment.User.LastName</td>
 									<td>@Model.BillInfo.Appointment.Notes</td>
 									<td> <button class="btn btn-success" style="background-color: rgb(92, 155, 217);" id="add-bill-item-button">Add Bill Item</button></td>
 								</tr>

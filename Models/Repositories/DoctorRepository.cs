@@ -158,6 +158,8 @@ namespace HospitalWebApplication.Models.Repositories
         {
             return await _context.Bills
                 .Include(x => x.Appointment)
+                .ThenInclude(x => x.Doctor)
+                .ThenInclude(x => x.User)
                 .FirstOrDefaultAsync(x => x.AppointmentId == appointmentId);
         }
 
